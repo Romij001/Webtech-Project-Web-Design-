@@ -1,0 +1,24 @@
+CREATE TABLE users (
+			  UserID int(11) NOT NULL AUTO_INCREMENT,
+			  FirstName varchar(100) NOT NULL,
+			  LastName varchar(100) NOT NULL,
+			  Address varchar(500) NOT NULL,
+			  Gender varchar(20) NOT NULL,
+			  Username varchar(20) NOT NULL,
+			  Email varchar(20) NOT NULL,
+			  Password varchar(20) NOT NULL,
+			  UserType varchar(10) NOT NULL,
+			  Attempt int(11) NOT NULL,
+			  Status int(11) NOT NULL,
+			  PRIMARY KEY (UserID))
+
+
+CREATE TABLE votingagentss (
+			  AgentID int(11) NOT NULL AUTO_INCREMENT,
+			  FirstName varchar(100) NOT NULL,
+			  LastName varchar(100) NOT NULL,
+			  Address varchar(500)  NULL,
+			  Gender varchar(20) NOT NULL,
+			  Email varchar(20) NULL,
+                          Status int(11) NOT NULL,
+			  PRIMARY KEY (AgentID))

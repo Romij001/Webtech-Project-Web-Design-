@@ -1,0 +1,91 @@
+<?php  
+
+session_start();
+
+	if ($_SERVER['REQUEST_METHOD'] === "POST") {
+		$fname =  $_POST['fname'];
+        $lname =  $_POST['lname'];
+        $gender=  $_POST['gender'];
+        $email =  $_POST['email'];
+        
+		$_SESSION['isEdit_Success'] = false ;
+        $isvalid = true;
+        
+		function ContainsNumbers($String){
+			return preg_match('~[0-9]~', $String);
+		}
+
+		if (empty($fname)) {
+		     $_SESSION['fname_error_msg'] = "First name  is empty";
+		     $_SESSION['isEdit_Success'] = false ;
+			     $isvalid = false;
+		     header ("Location: ../View/Rpage.php");
+		}
+		else if (ContainsNumbers($fname)) {
+		     $_SESSION['fname_error_msg'] = "Name can not be Number";
+		     $_SESSION['isEdit_Success'] = false ;
+			     $isvalid = false;
+		     header ("Location: ../View/Rpage.php");
+		}
+		else if(empty($lname)) {
+		     $_SESSION['lname_error_msg'] = "Last name is empty";
+		     $_SESSION['isEdit_Success'] = false ;
+			     $isvalid = false;
+		     header ("Location: ../View/Rpage.php");
+		}
+		else if(ContainsNumbers($lname)) {
+		     $_SESSION['lname_error_msg'] = "Name can not be Number";
+		     $_SESSION['isEdit_Success'] = false ;
+			     $isvalid = false;
+		     header ("Location: ../View/Rpage.php");
+		}
+		else if (empty($gender)) {
+		     $_SESSION['gender_error_msg'] = "Gender option must be selected";
+		     $_SESSION['isEdit_Success'] = false ;
+			     $isvalid = false;
+		     header ("Location: ../View/Rpage.php");
+		}
+		else if(empty($email)) {
+		     $_SESSION['email_error_msg'] = "Email is empty";
+		     $_SESSION['isEdit_Success'] = false ;
+			     $isvalid = false;
+		     header ("Location: ../View/Rpage.php");
+		}
+		else  {
+		     $_SESSION['fname_error_msg'] = "";
+		     $_SESSION['lname_error_msg'] = "";
+		     $_SESSION['gender_error_msg'] = "";
+		     $_SESSION['email_error_msg'] = "";
+		     $_SESSION['isEdit_Success'] = true ;
+
+		    require("../controller/ReadFile.php");
+			if(count($users) > 0){
+				for ($i = 0; $i < count($users); $i++){
+				  if ($users[$i]->ID === $_SESSION['u_id'] ){
+					$users[$i]->FirstName = ($fname != "")? $fname : $users[$i]->FirstName;
+					$users[$i]->LastName = ($lname != "")? $lname : $users[$i]->LastName;
+					$users[$i]->Email = ($email != "")? $email : $users[$i]->Email;
+					$users[$i]->Gender = ($gender != "")? $gender : $users[$i]->Gender;
+					  break;
+				  }
+				}
+			}
+			
+			require("../controller/WriteFile.php");
+			
+			if($isWrite_Success > 0) 
+			{
+				$_SESSION['isEdit_Success'] = true;
+				$_SESSION['error_msg'] = "";
+				header('location: ../View/Profile.php');
+			}
+			else{
+				$_SESSION['isEdit_Success'] = false;
+				$_SESSION['error_msg'] = "Sorry could not edit candidate.";
+				header('location: EditUser.php');
+			}
+		}
+	}
+
+
+?>

@@ -1,0 +1,108 @@
+<?php
+   session_start();
+?>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voting Management System</title>
+  <link rel="stylesheet" href="../CSS/Style.css">
+</head>
+<body>
+
+<div class="registration_form">
+<h1>Edit User</h1>
+
+<form action=" ../Controller/EditCheck.php" method="POST" validate >
+  <?php
+	try{
+		$isEdit_Success = $_SESSION['isEdit_Success'];
+	}
+	catch(Exception $e){
+		$_SESSION['isEdit_Success'] = true;
+	}
+	require("../controller/ReadFile.php");      
+	if (count($users) > 0) {
+	for($i = 0; $i < count($users); $i++){
+	  if ($users[$i]->ID === $_SESSION['u_id'] ){
+	  $id=$users[$i]->ID;
+	  $fname=$users[$i]->FirstName;
+	  $lname=$users[$i]->LastName;
+	  $gender=$users[$i]->Gender;
+	  $email=$users[$i]->Email;
+	  break;
+	  }
+	}
+	}
+  ?>
+
+  <input type="hidden" name="id" value="<?php echo $id ?>" />
+  <div class="text_field">
+  <label for="fname">First name:</label><br>
+  <input type="text" id="fname" name="fname" value="<?php echo $fname ?>">
+  <?php  
+        if(isset($_SESSION['fname_error_msg'])){
+        echo $_SESSION['fname_error_msg'] ;
+		if($_SESSION['isEdit_Success']) $_SESSION['fname_error_msg'] = "";
+        } 
+  ?>
+  <br>
+  <label for="lname">Last name:</label><br>
+  <input type="text" id="lname" name="lname" value="<?php echo $lname ?>">
+  <?php  
+        if(isset($_SESSION['lname_error_msg'])){
+        echo $_SESSION['lname_error_msg'] ;
+		if($_SESSION['isEdit_Success']) $_SESSION['lname_error_msg'] = "";
+		} 
+  ?>
+  <br><br>
+  <?php
+        $male = true;
+        $female = false;
+        if($gender == "Female"){
+          $male = false;
+          $female = true;
+        }
+        else{
+          $male = true;
+          $female = false;
+        }
+  ?>
+  <label for="gender">Gender:</label><br>
+  <input type="radio" id="male" name="gender" checked="<?php echo $male ?>" value="male">
+  <label for="male">Male</label><br>
+  <input type="radio" id="female" name="gender" checked="<?php echo $female ?>" value="female">
+  <label for="female">Female</label>
+   <?php  
+        if(isset($_SESSION['gender_error_msg'])){
+        echo $_SESSION['gender_error_msg'] ;
+		if($_SESSION['isEdit_Success']) $_SESSION['gender_error_msg'] = "";
+		} 
+  ?>
+  <br><br>
+  <label for="email">Email:</label><br>
+  <input type="email" id="email" name="email" value="<?php echo $email ?>">
+  <?php  
+        if(isset($_SESSION['email_error_msg'])){
+        echo $_SESSION['email_error_msg'];
+		if($_SESSION['isEdit_Success']) $_SESSION['email_error_msg'] = "";
+		} 
+  ?>
+  <br><br>
+  
+  <input type="submit" value="Submit">
+  <a href="Login.php"><input type="button" value="Back"></a>
+  </div>
+  <?php  
+        if(isset($_SESSION['File_error_msg'])){
+        echo $_SESSION['File_error_msg'];
+		//if($_SESSION['isEdit_Success']) $_SESSION['File_error_msg'] = "";
+		} 
+  ?>  
+</form>
+</div>
+
+
+</body>
+</html>

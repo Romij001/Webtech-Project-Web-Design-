@@ -1,0 +1,62 @@
+<?php
+
+  session_start();
+
+?>  
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+  <link rel="stylesheet" href="../CSS/Style.css">
+</head>
+<body>
+  <div class="FP_form">
+
+<h1>Change Password</h1>
+
+<form action=" ../Controller/ChPassCheck.php" method="POST" validate>
+  <div class="text_field">
+  <label for="pwd">Current Password:</label><br>
+  <input type="Password" id="pwd" name="pwd">
+  <?php  
+   if(isset($_SESSION['Password_error_msg'])){
+   echo $_SESSION['Password_error_msg'] ;
+            
+   if ($_SESSION['ispass_valid']) $_SESSION['Password_error_msg'] = "";
+
+  } 
+  ?>    
+  <br>
+  <label for="pwd">New Password:</label><br>
+  <input type="Password" id="pwd" name="pwd1">
+  <?php  
+     if(isset($_SESSION['Password1_error_msg'])){
+     echo $_SESSION['Password1_error_msg'] ;
+            
+     if ($_SESSION['ispass_valid']) $_SESSION['Password1_error_msg'] = "";
+
+    } 
+  ?>    
+  <br>
+  <label for="pwd">Re-type new Password:</label><br>
+  <input type="Password" id="pwd" name="pwd2">
+  <?php  
+     if(isset($_SESSION['Password2_error_msg'])){
+     echo $_SESSION['Password2_error_msg'] ;
+            
+     if ($_SESSION['ispass_valid']) $_SESSION['Password2_error_msg'] = "";
+
+    } 
+  ?> 
+  <br><br>
+  <input type="submit" value="Submit">
+  <a href="Admin.php"><input type="button" value="Back"></a>
+  </div>
+</form>
+</div>
+
+</body>
+</html>

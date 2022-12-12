@@ -1,0 +1,71 @@
+<?php
+
+  session_start();  
+
+  if ($_SERVER['REQUEST_METHOD'] === "POST") {
+        $pwd  =  $_POST['pwd'];
+        $pwd1 =  $_POST['pwd1'];
+        $pwd2 =  $_POST['pwd2'];
+  
+
+    $isvalid = true;
+
+    if(isset($_SESSION['u_id'])){
+      $id=$_SESSION['u_id'];
+    }
+
+    if(empty($pwd)) {
+         $_SESSION['Password_error_msg'] = "Password is empty";
+         $_SESSION['ispass_valid'] = false ;
+           $isvalid = false;
+         header ("Location: ../View/Chpass.php");
+    }  
+
+    else if(empty($pwd1)) {
+         $_SESSION['Password1_error_msg'] = "New Password is empty";
+         $_SESSION['ispass_valid'] = false ;
+           $isvalid = false;
+         header ("Location: ../View/Chpass.php");
+    } 
+
+   else if(empty($pwd2)) {
+         $_SESSION['Password2_error_msg'] = "Re-Type Password is empty";
+         $_SESSION['ispass_valid'] = false ;
+           $isvalid = false;
+         header ("Location: ../View/Chpass.php");
+    }
+   
+    else {
+		require("../Controller/ReadFile.php");
+		
+        if (count($users) > 0) {
+          for ($i = 0; $i < count($users); $i++){
+            echo $i;
+            if ($users[$i]->ID === $id and $users[$i]->Password === $pwd){
+              $users[$i]->Password = ($pwd1 != "")? $pwd1 : $users[$i]->Password;
+              break;
+            }
+          }
+        }
+		
+		require("'../Controller/WriteFile.php");
+		
+        if($isWrite_Success > 0) 
+        {
+         $_SESSION['Password_error_msg'] = "";
+         $_SESSION['Password1_error_msg'] = "";
+         $_SESSION['Password2_error_msg'] = "";
+         $_SESSION['ispass_valid'] = true ;
+          fclose($file);
+         header ("Location: ../View/Admin.php");
+        }
+        else{
+          $_SESSION['ispass_valid'] = false;
+          fclose($file);
+          header('location: ChPassCheck.php');
+        }
+      }  
+  }
+?>
+
+

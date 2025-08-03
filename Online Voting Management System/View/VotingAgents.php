@@ -87,7 +87,6 @@ if($_SESSION['userId'] > 0)
   <br>
   <a href="Admin.php"><input type="button" value="BACK"></a>
   </div>
-
   </body>
   </html>
 

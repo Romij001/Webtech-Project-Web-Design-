@@ -22,3 +22,24 @@ CREATE TABLE votingagentss (
 			  Email varchar(20) NULL,
                           Status int(11) NOT NULL,
 			  PRIMARY KEY (AgentID))
+
+CREATE TABLE Voters (
+			  VoterID int(11) NOT NULL AUTO_INCREMENT,
+			  FirstName varchar(100) NOT NULL,
+			  LastName varchar(100) NOT NULL,
+			  Address varchar(500)  NULL,
+			  Gender varchar(20) NOT NULL,
+			  Email varchar(20) NULL,
+                          Status int(11) NOT NULL,
+			  PRIMARY KEY (VoterID))
+
+CREATE TABLE candidates (
+			  CandidateID int(11) NOT NULL AUTO_INCREMENT,
+			  FirstName varchar(100) NOT NULL,
+			  LastName varchar(100) NOT NULL,
+			  Address varchar(500)  NULL,
+			  Gender varchar(20) NOT NULL,
+			  Email varchar(20) NULL,
+                          Status int(11) NOT NULL,
+			  PRIMARY KEY (CandidateID))
+

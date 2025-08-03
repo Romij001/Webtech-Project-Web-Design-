@@ -62,13 +62,13 @@ if($_POST){
 	{
 		$_SESSION['isEdit_Success'] = true;
 		$_SESSION['error_msg'] = "";
-		fclose($file);
+		//fclose($file);
 		header('location: ../View/Candidates.php');
 	}
 	else{
 		$_SESSION['isEdit_Success'] = false;
 		$_SESSION['error_msg'] = "Sorry could not edit candidate.";
-		fclose($file);
+		//fclose($file);
 		header('location: ../View/CandidateEdit.php');
 	}
 }
